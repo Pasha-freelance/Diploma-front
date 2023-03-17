@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthorizationComponent } from "./authorization.component";
-import { SignUpComponent } from "./sign-up/sign-up.component";
-import { LogInComponent } from "./log-in/log-in.component";
+import { SignUpComponent } from "./components/sign-up/sign-up.component";
+import { LogInComponent } from "./components/log-in/log-in.component";
 
 @NgModule({
   imports: [
@@ -13,7 +13,7 @@ import { LogInComponent } from "./log-in/log-in.component";
         children: [
           { path: '', redirectTo: 'login', pathMatch: 'full' },
           { path: 'login', component: LogInComponent },
-          { path: 'sign-up', component: SignUpComponent },
+          { path: 'signup', component: SignUpComponent },
         ]
       }
     ])

@@ -1,0 +1,15 @@
+.authorization-card {
+  width: 400px;
+  height: 400px;
+}
+
+.content {
+  padding: 70px 0;
+  mat-form-field {
+    width: 100%
+  }
+}
+
+mat-card-footer {
+  padding-right: 16px;
+}

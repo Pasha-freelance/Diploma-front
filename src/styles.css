@@ -2,3 +2,9 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.authorization-card.mat-card {
+  padding: 25px;
+  border-radius: 15px;
+}

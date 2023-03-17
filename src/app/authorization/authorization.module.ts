@@ -2,9 +2,12 @@ import { NgModule } from '@angular/core';
 
 import { AuthorizationComponent } from './authorization.component';
 import { AuthorizationRoutingModule } from "./authorization-routing.module";
-import { SignUpComponent } from "./sign-up/sign-up.component";
-import { AngularMaterialModule } from "../shared/angular-material.module";
-import { LogInComponent } from "./log-in/log-in.component";
+import { SignUpComponent } from "./components/sign-up/sign-up.component";
+import { SharedModule } from "../shared/shared.module";
+import { LogInComponent } from "./components/log-in/log-in.component";
+import { ReactiveFormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -14,9 +17,14 @@ import { LogInComponent } from "./log-in/log-in.component";
   ],
   imports: [
     AuthorizationRoutingModule,
-    AngularMaterialModule
+    SharedModule,
+    ReactiveFormsModule,
+    RouterModule
   ],
-  providers: [],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AuthorizationComponent]
 })
-export class AuthorizationModule { }
+export class AuthorizationModule {
+}
