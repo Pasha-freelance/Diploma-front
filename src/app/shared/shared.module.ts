@@ -6,13 +6,16 @@ import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
 import { LogoComponent } from './components/logo/logo.component';
 import { CommonService } from "./services/common";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { NotificationService } from "./services/notification.service";
 
-const angualrMateerialModules = [
+const angularMaterialModules = [
   MatCardModule,
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
-  MatIconModule
+  MatIconModule,
+  MatSnackBarModule
 ];
 
 @NgModule({
@@ -20,14 +23,15 @@ const angualrMateerialModules = [
     LogoComponent
   ],
   imports: [
-    ...angualrMateerialModules
+    ...angularMaterialModules
   ],
   exports: [
-    ...angualrMateerialModules,
+    ...angularMaterialModules,
     LogoComponent
   ],
   providers: [
-    CommonService
+    CommonService,
+    NotificationService
   ]
 })
 export class SharedModule { }

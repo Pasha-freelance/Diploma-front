@@ -19,7 +19,7 @@
       <mat-card-footer>
         <mat-card-actions align="end">
           <button mat-button (click)="redirectToSignUp()">Зареєструватись</button>
-          <button mat-raised-button (click)="login()">Продовжити &nbsp;&nbsp;<mat-icon>arrow_right_alt</mat-icon></button>
+          <button mat-raised-button [disabled]="form.invalid" (click)="login()">Продовжити &nbsp;&nbsp;<mat-icon>arrow_right_alt</mat-icon></button>
         </mat-card-actions>
       </mat-card-footer>
     </mat-card>
