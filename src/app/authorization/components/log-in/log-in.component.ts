@@ -33,10 +33,6 @@ export class LogInComponent {
   }
 
   login() {
-    this.service.login(this.form.value).subscribe(resp => {
-
-    }, (e) => {
-      this.notificationService.showServerError(e);
-    });
+    this.service.login(this.form.value).subscribe();
   }
 }

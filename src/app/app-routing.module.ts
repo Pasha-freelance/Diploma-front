@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('src/app/authorization/authorization.module').then(m => m.AuthorizationModule), //Lazy load authorization module
   },
   {
+    path: 'dashboard',
+    loadChildren: () => import('src/app/dashboard/dashboard.module').then(m => m.DashboardModule), //Lazy load authorization module
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'auth'

@@ -1,0 +1,33 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Digit Docs</span>
+  <div class="divider"></div>
+  <div class="user-info" *ngIf="user$ | async as user">
+    <span>{{ user.firstName}} {{user.lastName}}</span>
+  </div>
+</mat-toolbar>
+
+<div class="wrapper">
+  <div class="upload-doc">
+    <p-fileUpload name="file"
+                  [multiple]="true"
+                  (onUpload)="onUpload($event)"
+                  [url]="fileUploadLink"
+                  [maxFileSize]="1000000">
+      <ng-template pTemplate="content">
+        <ul *ngIf="uploadedFiles.length">
+          <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+        </ul>
+      </ng-template>
+    </p-fileUpload>
+  </div>
+  <div class="documents-list">
+    <ng-container *ngIf="files$ | async as files" >
+      <div *ngFor="let file of files" class="file" (click)="viewDocument(file.uuid)">
+        <div>{{file.originalName}}</div>
+      </div>
+    </ng-container>
+  </div>
+</div>

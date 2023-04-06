@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -10,7 +11,7 @@ export class NotificationService {
     private _snackBar: MatSnackBar
   ){}
 
-  showServerError(e: { error: string, statusCode?: number }): void {
+  showServerError(e: { error: string, statusCode?: number }): Observable<null> {
     this._snackBar.open(
       e.error.toString(),
       '',
@@ -21,5 +22,6 @@ export class NotificationService {
         panelClass: 'snackbar_error'
       }
     )
+    return of(null)
   }
 }

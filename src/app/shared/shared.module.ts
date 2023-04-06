@@ -8,6 +8,8 @@ import { LogoComponent } from './components/logo/logo.component';
 import { CommonService } from "./services/common";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { NotificationService } from "./services/notification.service";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { AuthService } from "../authorization/services/auth.service";
 
 const angularMaterialModules = [
   MatCardModule,
@@ -15,7 +17,8 @@ const angularMaterialModules = [
   MatFormFieldModule,
   MatInputModule,
   MatIconModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatToolbarModule
 ];
 
 @NgModule({
@@ -31,7 +34,9 @@ const angularMaterialModules = [
   ],
   providers: [
     CommonService,
-    NotificationService
+    NotificationService,
+    AuthService
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}

@@ -8,6 +8,7 @@ import { LogInComponent } from "./components/log-in/log-in.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AuthService } from './services/auth.service';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -19,10 +20,10 @@ import { AuthService } from './services/auth.service';
     AuthorizationRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    MatSnackBarModule
   ],
   providers: [
-    AuthService
   ],
   bootstrap: [AuthorizationComponent]
 })
