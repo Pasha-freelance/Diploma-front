@@ -7,6 +7,7 @@ import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { FileService } from "./services/file-service";
 import { FileUploadModule } from "primeng/fileupload";
 import { AuthService } from "../authorization/services/auth.service";
+import { DataViewModule } from "primeng/dataview";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AuthService } from "../authorization/services/auth.service";
     CommonModule,
     SharedModule,
     RouterModule,
-    FileUploadModule
+    FileUploadModule,
+    DataViewModule
   ],
   providers: [
     FileService,

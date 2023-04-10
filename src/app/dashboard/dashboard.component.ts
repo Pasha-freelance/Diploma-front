@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { SessionService } from "../shared/services/session.service";
 import { AuthService } from "../authorization/services/auth.service";
 import { FileService } from "./services/file-service";
-import { IDocumentsList } from "./interfaces/document.interface";
-import { filter, switchMap } from "rxjs";
+import { Subject, switchMap } from "rxjs";
 
 @Component({
   selector: 'app-dashboard',
@@ -13,9 +12,10 @@ import { filter, switchMap } from "rxjs";
 export class DashboardComponent {
 
   user$ = this.session.user$;
-  files$ = this.user$.pipe(
-    filter(u => !!u),
-    switchMap(u => this.fileService.downloadAllDocs(u.userId))
+  shouldUpdateFiles$ = new Subject<void>();
+
+  files$ = this.shouldUpdateFiles$.pipe(
+    switchMap(() => this.fileService.downloadAllDocs(this.session.user.userId))
   );
   uploadedFiles: any[] = [];
 
@@ -29,7 +29,10 @@ export class DashboardComponent {
   ngOnInit() {
     if (localStorage.getItem('ddUserId')) {
       const id = localStorage.getItem('ddUserId');
-      this.authService.getUser(id as string).subscribe(r => this.session.user$.next(r))
+      this.authService.getUser(id as string).subscribe(r => {
+        this.session.user$.next(r);
+        this.shouldUpdateFiles$.next();
+      });
     }
   }
 
@@ -41,6 +44,8 @@ export class DashboardComponent {
     for (let file of event.files) {
       this.uploadedFiles.push(file);
     }
+
+    this.shouldUpdateFiles$.next();
   }
 
   get fileUploadLink() {

@@ -23,11 +23,20 @@
       </ng-template>
     </p-fileUpload>
   </div>
-  <div class="documents-list">
-    <ng-container *ngIf="files$ | async as files" >
-      <div *ngFor="let file of files" class="file" (click)="viewDocument(file.uuid)">
-        <div>{{file.originalName}}</div>
+
+  <p-dataView #dv
+              *ngIf="files$ | async as files"
+              [value]="files || []"
+              layout="list">
+    <ng-template pTemplate="header">
+      <h2 style="text-align: center">Your documents</h2>
+    </ng-template>
+    <ng-template let-doc pTemplate="listItem">
+      <div class="doc-list-item">
+        <div>{{doc.originalName}}</div>
+        <button mat-raised-button (click)="viewDocument(doc.uuid)">Preview</button>
       </div>
-    </ng-container>
-  </div>
+    </ng-template>
+
+  </p-dataView>
 </div>

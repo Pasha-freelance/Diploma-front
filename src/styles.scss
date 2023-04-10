@@ -16,3 +16,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background: #f34336;
   color: white;
 }
+
+p-dataview {
+  width: 100vw;
+}
+
+.doc-list-item {
+  height: 80px;
+  padding: 10px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &:hover {
+    background: lightgrey;
+  }
+}

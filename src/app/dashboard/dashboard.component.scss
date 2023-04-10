@@ -4,6 +4,7 @@
   align-items: center;
   flex-direction: column;
   gap: 100px;
+  overflow-x: hidden;
 }
 
 .divider {
@@ -19,5 +20,10 @@
 }
 
 .documents-list {
+  width: 100vw;
 
+  .file {
+    height: 50px;
+    background: red;
+  }
 }

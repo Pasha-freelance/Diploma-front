@@ -7,7 +7,6 @@ import { SharedModule } from "../shared/shared.module";
 import { LogInComponent } from "./components/log-in/log-in.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { AuthService } from './services/auth.service';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
