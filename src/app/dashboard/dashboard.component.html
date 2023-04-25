@@ -11,17 +11,32 @@
 
 <div class="wrapper">
   <div class="upload-doc">
-    <p-fileUpload name="file"
-                  [multiple]="true"
-                  (onUpload)="onUpload($event)"
-                  [url]="fileUploadLink"
-                  [maxFileSize]="1000000">
-      <ng-template pTemplate="content">
-        <ul *ngIf="uploadedFiles.length">
-          <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+
+    <div class="file-wrapper">
+      <div class="image-input">
+        <p-button *ngIf="filesToUpload.length"
+                  label="Save file"
+                  icon="pi pi-save"
+                  [loading]="!!(isFileLoading$ | async)"
+                  (click)="uploadFile()">
+        </p-button>
+        <label for="image-input" style="position:relative;">
+          <p-button *ngIf="!filesToUpload.length"
+                    label="Select file"
+                    (onClick)="$event.preventDefault()"
+                    icon="pi pi-plus">
+          </p-button>
+          <input type="file"
+                 id="image-input"
+                 (change)="onFileSelect($event)">
+        </label>
+      </div>
+      <div>
+        <ul *ngIf="filesToUpload.length">
+          <li> {{ filesToUpload[0].name }}</li>
         </ul>
-      </ng-template>
-    </p-fileUpload>
+      </div>
+    </div>
   </div>
 
   <p-dataView #dv
@@ -37,6 +52,36 @@
         <button mat-raised-button (click)="viewDocument(doc.uuid)">Preview</button>
       </div>
     </ng-template>
-
   </p-dataView>
 </div>
+
+<p-dialog #dialog [(visible)]="isAttachPopupVisible"
+          [draggable]="false"
+          [closable]="true"
+          [closeOnEscape]="true"
+          [modal]="true"
+          [style]="{width: '50vw', height: '60vh'}"
+>
+  <h2 [style]="{'text-align': 'center' }">Congrats your file is uploaded</h2>
+  <h3 [style]="{'text-align': 'center' }">Now choose who can have access to it</h3>
+
+  <h3 [style]="{'text-align': 'center' }"><i class="pi pi-check-circle circle-check"></i></h3>
+
+  <div class="autocomplete-wrap">
+    <span class="p-fluid" [style]="{width: '400px' }">
+    <p-autoComplete [(ngModel)]="selectedUsersToAttach"
+                    [suggestions]="allUsersToAttach"
+                    [forceSelection]="true"
+                    [showEmptyMessage]="true"
+                    [completeOnFocus]="true"
+                    [minLength]="2"
+                    (completeMethod)="getUsersToAttach($event)"
+                    placeholder="Type an email.."
+                    field="firstName"
+                    [multiple]="true"
+    ></p-autoComplete>
+    </span>
+
+    <button mat-raised-button (click)="attachAllowedUsers(dialog, $event)"> Submit </button>
+  </div>
+</p-dialog>

@@ -24,4 +24,18 @@ export class NotificationService {
     )
     return of(null)
   }
+
+  showSuccess(text: string){
+    this._snackBar.open(
+      text,
+      '',
+      {
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        duration: 2000,
+        panelClass: 'snackbar_success'
+      }
+    )
+    return of(null)
+  }
 }

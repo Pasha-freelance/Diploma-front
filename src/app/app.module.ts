@@ -17,7 +17,6 @@ import { AppInterceptor } from "./shared/interceptors/interceptor";
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-
   ],
   providers: [
     AuthService,

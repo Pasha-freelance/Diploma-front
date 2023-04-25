@@ -6,8 +6,11 @@ import { RouterModule } from "@angular/router";
 import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { FileService } from "./services/file-service";
 import { FileUploadModule } from "primeng/fileupload";
-import { AuthService } from "../authorization/services/auth.service";
 import { DataViewModule } from "primeng/dataview";
+import { DialogModule } from "primeng/dialog";
+import { InputTextModule } from "primeng/inputtext";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AutoCompleteModule } from "primeng/autocomplete";
 
 @NgModule({
   declarations: [
@@ -19,7 +22,12 @@ import { DataViewModule } from "primeng/dataview";
     SharedModule,
     RouterModule,
     FileUploadModule,
-    DataViewModule
+    DataViewModule,
+    DialogModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    AutoCompleteModule,
+    FormsModule
   ],
   providers: [
     FileService,
