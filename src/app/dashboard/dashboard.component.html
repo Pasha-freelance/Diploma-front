@@ -55,12 +55,13 @@
   </p-dataView>
 </div>
 
-<p-dialog #dialog [(visible)]="isAttachPopupVisible"
+<p-dialog #dialog
+          [(visible)]="isAttachPopupVisible"
           [draggable]="false"
           [closable]="true"
           [closeOnEscape]="true"
           [modal]="true"
-          [style]="{width: '50vw', height: '60vh'}"
+          [style]="{width: '50vw', height: '70vh'}"
 >
   <h2 [style]="{'text-align': 'center' }">Congrats your file is uploaded</h2>
   <h3 [style]="{'text-align': 'center' }">Now choose who can have access to it</h3>
@@ -77,11 +78,19 @@
                     [minLength]="2"
                     (completeMethod)="getUsersToAttach($event)"
                     placeholder="Type an email.."
-                    field="firstName"
-                    [multiple]="true"
-    ></p-autoComplete>
+                    field="lastName"
+                    [multiple]="true">
+
+      <ng-template let-user pTemplate="item">
+        <div class="flex align-items-center gap-2">
+           <div>{{ user.email }} </div>
+          <div>{{ user.firstName }} {{ user.lastName }}</div>
+        </div>
+      </ng-template>
+
+    </p-autoComplete>
     </span>
 
-    <button mat-raised-button (click)="attachAllowedUsers(dialog, $event)"> Submit </button>
+    <button mat-raised-button [disabled]="!selectedUsersToAttach.length" (click)="attachAllowedUsers(dialog, $event)"> Submit</button>
   </div>
 </p-dialog>

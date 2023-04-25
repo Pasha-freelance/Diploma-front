@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { CommonService } from "../../shared/services/common";
 import { IDocumentsList } from "../interfaces/document.interface";
 import { SessionService } from "../../shared/services/session.service";
+import { IUser } from "../../shared/interfaces/user.interface";
 
 @Injectable()
 export class FileService extends CommonService{
@@ -28,7 +29,7 @@ export class FileService extends CommonService{
   }
 
   getUsersToAttach(email: string) {
-    return this.http.get<any>(
+    return this.http.get<{ users: IUser[]}>(
       `${this.apiUrl}/dashboard/documents/usersToAttach?profileId=${this.session.user.userId}&email=${email}`
     );
   }

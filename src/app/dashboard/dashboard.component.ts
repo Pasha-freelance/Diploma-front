@@ -55,7 +55,9 @@ export class DashboardComponent {
     this.fileService.getUsersToAttach(e.query).pipe(
       first(),
     ).subscribe(users => {
-      this.allUsersToAttach = users['users'];
+      const a = this.selectedUsersToAttach.map(u => u.userId);
+
+      this.allUsersToAttach = a.length ? users['users'].filter(u => !a.includes(u.userId)) : users.users;
     })
   }
 
