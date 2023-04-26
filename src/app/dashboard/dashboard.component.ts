@@ -1,12 +1,16 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { SessionService } from "../shared/services/session.service";
 import { AuthService } from "../authorization/services/auth.service";
 import { FileService } from "./services/file-service";
-import { BehaviorSubject, debounceTime, first, Subject, switchMap } from "rxjs";
-import { FormControl } from "@angular/forms";
+import { BehaviorSubject, first, iif, Subject, switchMap, withLatestFrom } from "rxjs";
 import { IUser } from "../shared/interfaces/user.interface";
 import { Dialog } from "primeng/dialog";
 import { NotificationService } from "../shared/services/notification.service";
+
+enum MODE {
+  MY,
+  SHARED
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -15,12 +19,18 @@ import { NotificationService } from "../shared/services/notification.service";
 })
 export class DashboardComponent {
 
+  modes = MODE;
+  currMode = MODE.MY;
   user$ = this.session.user$;
   shouldUpdateFiles$ = new Subject<void>();
   isAttachPopupVisible = false;
 
   files$ = this.shouldUpdateFiles$.pipe(
-    switchMap(() => this.fileService.downloadAllDocs(this.session.user.userId)),
+    switchMap(() => iif(
+      () => this.currMode === MODE.MY,
+      this.fileService.downloadAllDocs(this.session.user.userId),
+      this.fileService.downloadAllowedToMeDocs(this.session.user.userId)
+    )),
   );
   filesToUpload: File[] = [];
   isFileLoading$ = new BehaviorSubject(false);
@@ -28,6 +38,7 @@ export class DashboardComponent {
   allUsersToAttach: IUser[] = []
   selectedUsersToAttach: IUser[] = []
   lastUploadedUUID: string = '';
+  isSidebarVisible = false;
 
   constructor(
     private session: SessionService,
@@ -78,12 +89,30 @@ export class DashboardComponent {
     this.isFileLoading$.next(true);
     const formData = new FormData();
     formData.append("file", this.filesToUpload[0]);
-    this.fileService.upload(formData).subscribe((data: any) => {
+    this.fileService.upload(formData).subscribe(
+      (data: any) => {
       this.lastUploadedUUID = data.uuid;
       this.isFileLoading$.next(false);
       this.filesToUpload = [];
       this.isAttachPopupVisible = true;
       this.shouldUpdateFiles$.next();
-    })
+    },
+      e => {
+        this.notificationService.showServerError(e)
+        this.isFileLoading$.next(false);
+        this.filesToUpload = [];
+      }
+    )
+  }
+
+  changeMode(mode: MODE) {
+    this.currMode = mode;
+    this.shouldUpdateFiles$.next();
+    this.isSidebarVisible = false;
+  }
+
+  tableHeaderByTab = {
+    [MODE.MY]: 'Your documents',
+    [MODE.SHARED]: 'Shared with you'
   }
 }

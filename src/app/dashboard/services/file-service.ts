@@ -20,6 +20,10 @@ export class FileService extends CommonService{
     return this.http.get<IDocumentsList>(`${this.apiUrl}/dashboard/documents/downloadAll?userId=${id}`);
   }
 
+  downloadAllowedToMeDocs(id: string) {
+    return this.http.get<IDocumentsList>(`${this.apiUrl}/dashboard/documents/allowedToMe?userId=${id}`);
+  }
+
   previewDocument(uuid: string, userId: string) {
     return window.open(`${this.apiUrl}/dashboard/documents/download?userId=${userId}&uuid=${uuid}`, '_blank');
   }

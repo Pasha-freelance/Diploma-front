@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button mat-icon-button class="example-icon" (click)="isSidebarVisible = !isSidebarVisible" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
   <span>Digit Docs</span>
@@ -12,7 +12,7 @@
 <div class="wrapper">
   <div class="upload-doc">
 
-    <div class="file-wrapper">
+    <div *ngIf="currMode === modes.MY" class="file-wrapper">
       <div class="image-input">
         <p-button *ngIf="filesToUpload.length"
                   label="Save file"
@@ -44,7 +44,7 @@
               [value]="files || []"
               layout="list">
     <ng-template pTemplate="header">
-      <h2 style="text-align: center">Your documents</h2>
+      <h2 style="text-align: center">{{tableHeaderByTab[this.currMode]}}</h2>
     </ng-template>
     <ng-template let-doc pTemplate="listItem">
       <div class="doc-list-item">
@@ -94,3 +94,9 @@
     <button mat-raised-button [disabled]="!selectedUsersToAttach.length" (click)="attachAllowedUsers(dialog, $event)"> Submit</button>
   </div>
 </p-dialog>
+
+
+<p-sidebar [(visible)]="isSidebarVisible">
+  <div class="sidebar-option" (click)="changeMode(modes.MY)"> My documents</div>
+  <div class="sidebar-option" (click)="changeMode(modes.SHARED)"> Shared with me documents</div>
+</p-sidebar>

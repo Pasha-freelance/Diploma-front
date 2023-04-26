@@ -11,6 +11,8 @@ import { DialogModule } from "primeng/dialog";
 import { InputTextModule } from "primeng/inputtext";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AutoCompleteModule } from "primeng/autocomplete";
+import { SidebarModule } from "primeng/sidebar";
+import { ListboxModule } from "primeng/listbox";
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { AutoCompleteModule } from "primeng/autocomplete";
     InputTextModule,
     ReactiveFormsModule,
     AutoCompleteModule,
-    FormsModule
+    FormsModule,
+    SidebarModule,
+    ListboxModule
   ],
   providers: [
     FileService,
