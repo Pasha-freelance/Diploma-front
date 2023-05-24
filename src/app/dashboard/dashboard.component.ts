@@ -24,6 +24,7 @@ export class DashboardComponent {
   user$ = this.session.user$;
   shouldUpdateFiles$ = new Subject<void>();
   isAttachPopupVisible = false;
+  isManageAccessPopupVisible = false;
 
   files$ = this.shouldUpdateFiles$.pipe(
     switchMap(() => iif(
@@ -37,6 +38,7 @@ export class DashboardComponent {
 
   allUsersToAttach: IUser[] = []
   selectedUsersToAttach: IUser[] = []
+  allowedUsers: IUser[] = [];
   lastUploadedUUID: string = '';
   isSidebarVisible = false;
 
@@ -72,8 +74,8 @@ export class DashboardComponent {
     })
   }
 
-  attachAllowedUsers(ref: Dialog, event: any) {
-    this.fileService.attachUsers(this.lastUploadedUUID, this.selectedUsersToAttach.map(u => u.userId)).subscribe(() => {
+  attachAllowedUsers(ref: Dialog, event: any, edit = false) {
+    this.fileService.attachUsers(this.lastUploadedUUID, this.selectedUsersToAttach.map(u => u.userId), edit).subscribe(() => {
       this.lastUploadedUUID = '';
       this.selectedUsersToAttach = [];
       ref.close(event);
@@ -94,6 +96,7 @@ export class DashboardComponent {
       this.lastUploadedUUID = data.uuid;
       this.isFileLoading$.next(false);
       this.filesToUpload = [];
+      this.selectedUsersToAttach = [];
       this.isAttachPopupVisible = true;
       this.shouldUpdateFiles$.next();
     },
@@ -114,5 +117,13 @@ export class DashboardComponent {
   tableHeaderByTab = {
     [MODE.MY]: 'Your documents',
     [MODE.SHARED]: 'Shared with you'
+  }
+
+  openManageAccessPopup(uuid: string) {
+    this.isManageAccessPopupVisible = true;
+    this.lastUploadedUUID = uuid;
+    this.fileService.getAllowedUsersForDoc(uuid).subscribe(resp => {
+      this.selectedUsersToAttach = resp.users;
+    });
   }
 }

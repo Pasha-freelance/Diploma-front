@@ -32,6 +32,9 @@ p-dataview {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  div {
+    flex-basis: 25%;
+  }
   &:hover {
     background: lightgrey;
   }

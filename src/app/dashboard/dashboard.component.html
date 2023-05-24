@@ -49,7 +49,10 @@
     <ng-template let-doc pTemplate="listItem">
       <div class="doc-list-item">
         <div>{{doc.originalName}}</div>
+        <div>{{doc.originUser}}</div>
+        <div>{{doc.createdAt | date}}</div>
         <button mat-raised-button (click)="viewDocument(doc.uuid)">Preview</button>
+        <button mat-raised-button *ngIf="currMode === modes.MY" (click)="openManageAccessPopup(doc.uuid)">Manage access</button>
       </div>
     </ng-template>
   </p-dataView>
@@ -92,6 +95,44 @@
     </span>
 
     <button mat-raised-button [disabled]="!selectedUsersToAttach.length" (click)="attachAllowedUsers(dialog, $event)"> Submit</button>
+  </div>
+</p-dialog>
+
+<p-dialog #dialogManageAccess
+          [(visible)]="isManageAccessPopupVisible"
+          [draggable]="false"
+          [closable]="true"
+          [closeOnEscape]="true"
+          [modal]="true"
+          [style]="{width: '50vw', height: '70vh'}"
+>
+  <h3 [style]="{'text-align': 'center' }">Here you can manage who can have access to the file</h3>
+  <h3 [style]="{'text-align': 'center' }"><i class="pi pi-users users-icon"></i></h3>
+
+  <div class="autocomplete-wrap">
+    <span class="p-fluid" [style]="{width: '400px' }">
+    <p-autoComplete [(ngModel)]="selectedUsersToAttach"
+                    [suggestions]="allUsersToAttach"
+                    [forceSelection]="true"
+                    [showEmptyMessage]="true"
+                    [completeOnFocus]="true"
+                    [minLength]="2"
+                    (completeMethod)="getUsersToAttach($event)"
+                    placeholder="Type an email.."
+                    field="lastName"
+                    [multiple]="true">
+
+      <ng-template let-user pTemplate="item">
+        <div class="flex align-items-center gap-2">
+           <div>{{ user.email }} </div>
+          <div>{{ user.firstName }} {{ user.lastName }}</div>
+        </div>
+      </ng-template>
+
+    </p-autoComplete>
+    </span>
+
+    <button mat-raised-button (click)="attachAllowedUsers(dialogManageAccess, $event, true)"> Submit</button>
   </div>
 </p-dialog>
 

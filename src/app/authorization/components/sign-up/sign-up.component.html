@@ -2,16 +2,16 @@
   <form [formGroup]="form">
     <mat-card class="authorization-card">
       <mat-card-header>
-        <mat-card-title>Реєстрація</mat-card-title>
+        <mat-card-title>Sign Up</mat-card-title>
       </mat-card-header>
 
       <mat-card-content class="content">
         <mat-form-field appearance="outline">
-          <mat-label>Ім'я</mat-label>
+          <mat-label>First Name</mat-label>
           <input matInput formControlName="firstName">
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Прізвище</mat-label>
+          <mat-label>Last Name</mat-label>
           <input matInput formControlName="lastName">
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -19,15 +19,15 @@
           <input matInput formControlName="email">
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Пароль</mat-label>
+          <mat-label>Password</mat-label>
           <input type="password" matInput formControlName="password">
         </mat-form-field>
       </mat-card-content>
 
       <mat-card-footer>
         <mat-card-actions align="end">
-          <button mat-button type="button" (click)="redirectToLogin()">Увійти</button>
-          <button mat-raised-button type="submit" [disabled]="form.invalid" (click)="register()">Зареєструватись &nbsp;&nbsp;<mat-icon>arrow_right_alt</mat-icon></button>
+          <button mat-button type="button" (click)="redirectToLogin()">Log In</button>
+          <button mat-raised-button type="submit" [disabled]="form.invalid" (click)="register()">Countinue &nbsp;&nbsp;<mat-icon>arrow_right_alt</mat-icon></button>
         </mat-card-actions>
       </mat-card-footer>
     </mat-card>

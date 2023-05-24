@@ -6,7 +6,7 @@ import { SessionService } from "../../shared/services/session.service";
 import { IUser } from "../../shared/interfaces/user.interface";
 
 @Injectable()
-export class FileService extends CommonService{
+export class FileService extends CommonService {
 
 
   constructor(
@@ -33,18 +33,35 @@ export class FileService extends CommonService{
   }
 
   getUsersToAttach(email: string) {
-    return this.http.get<{ users: IUser[]}>(
+    return this.http.get<{ users: IUser[] }>(
       `${this.apiUrl}/dashboard/documents/usersToAttach?profileId=${this.session.user.userId}&email=${email}`
     );
   }
 
-  attachUsers(uuid: string, profileIds: string[]) {
-    return this.http.post<any[]>(
-      `${this.apiUrl}/dashboard/documents/attachAllowedUsers`,
-      {
-        uuid,
-        allowedUsers: profileIds
-      }
+  getAllowedUsersForDoc(uuid: string) {
+    return this.http.get<{ users: IUser[] }>(
+      `${this.apiUrl}/dashboard/documents/allowedForDoc?uuid=${uuid}`
     );
+  }
+
+  attachUsers(uuid: string, profileIds: string[], edit: boolean) {
+    if (!edit) {
+      return this.http.post<any[]>(
+        `${this.apiUrl}/dashboard/documents/attachAllowedUsers`,
+        {
+          uuid,
+          allowedUsers: profileIds
+        }
+      );
+    }
+    else {
+      return this.http.patch<any[]>(
+        `${this.apiUrl}/dashboard/documents/attachAllowedUsers`,
+        {
+          uuid,
+          allowedUsers: profileIds
+        }
+      );
+    }
   }
 }
